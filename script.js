@@ -1,40 +1,36 @@
-const getSumBtn = document.createElement("button");
-getSumBtn.append("Get Total Price");
-document.body.appendChild(getSumBtn);
-
-const getSum = () => {
-//Add your code here
-	  const priceElements = document.querySelectorAll(".price");
-
+// Function to calculate the total price
+function calculateTotal() {
+  // Select all elements with the class "prices"
+  const priceElements = document.querySelectorAll(".prices");
+  
   // Calculate the total price
   let total = 0;
   priceElements.forEach((priceElement) => {
     total += parseFloat(priceElement.textContent);
   });
 
-  // Check if the total row already exists
-  const table = document.querySelector("table");
+  // Select the table and check if the total row already exists
+  const table = document.getElementById("grocery-table");
   const existingTotalRow = document.querySelector(".total-row");
 
   if (existingTotalRow) {
-    // Update the total row if it already exists
-    existingTotalRow.firstChild.textContent = `Total Price: Rs ${total}`;
+    // If the total row exists, update its value
+    existingTotalRow.firstChild.textContent = `Total Price: $${total.toFixed(2)}`;
   } else {
-    // Create a new row for the total
+    // If the total row doesn't exist, create a new row
     const totalRow = document.createElement("tr");
-    totalRow.className = "total-row";
+    totalRow.className = "total-row"; // Add a class for the total row
 
     // Create a single cell spanning both columns
     const totalCell = document.createElement("td");
     totalCell.colSpan = 2;
-    totalCell.textContent = `Total Price: Rs ${total}`;
+    totalCell.textContent = `Total Price: $${total.toFixed(2)}`;
 
     // Append the cell to the row and the row to the table
     totalRow.appendChild(totalCell);
     table.appendChild(totalRow);
   }
-  
-};
+}
 
-getSumBtn.addEventListener("click", getSum);
-
+// Add an event listener to the "Calculate Total" button
+document.getElementById("calculate").addEventListener("click", calculateTotal);
